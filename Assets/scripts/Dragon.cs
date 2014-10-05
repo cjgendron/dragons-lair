@@ -10,15 +10,66 @@ public class Dragon : MonoBehaviour {
 	public float movementSpeed = 5f;
 	Vector3 prevDx; // used for rotation
 
+	// the flame object has to be the first child
+	ParticleSystem flame;
+	GameObject flameTarget;
+	public float flameRange = 20f;
+
 	// Use this for initialization
 	void Start () {
-	
+		flame = transform.GetChild (0).GetComponent<ParticleSystem>();
+		flame.Stop ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Move ();
 		Rotate ();
+
+		BreatheFire ();
+	}
+
+
+	// A function responsible for setting up the fire. Runs every frame.
+	void BreatheFire() {
+		GameObject target = GetClosestTarget (flameRange);
+		if (flameTarget != target) {
+			LoseTarget();
+			if (target != null) SetTarget(target);
+		}
+		if (flameTarget != null) {			
+			Vector3 direction = target.transform.position - transform.position;
+			flame.transform.rotation = Helpers.rotateTowards2D (direction, -90);
+		}
+	}
+
+	void SetTarget(GameObject target) {
+		flameTarget = target;
+		flame.Play ();
+	}
+
+	void LoseTarget() {
+		flame.Stop ();
+		flameTarget = null;
+	}
+
+
+
+	GameObject GetClosestTarget(float maxDistance = 9999999f) {
+		// there's a more efficient way to do this if the physics module is used
+		// but this is good enough for now
+		GameObject[] gos = GameObject.FindGameObjectsWithTag ("Damageable");
+		float minDist = 999999f;
+		GameObject closest = null;
+
+		foreach (GameObject g in gos) {
+			float distance = (g.transform.position - transform.position).sqrMagnitude; 
+			if (distance < minDist && distance < maxDistance) {
+				closest = g;
+				minDist = distance;
+			}
+		}
+		return closest;
 	}
 
 	void Move () {
@@ -36,7 +87,8 @@ public class Dragon : MonoBehaviour {
 	void Rotate() {
 		// there's no LookAt function for 2d :(
 		// -90 is needed because the sprite is not rotated correctly
-		float angle = Mathf.Atan2 (prevDx.y, prevDx.x) * Mathf.Rad2Deg - 90f;
-		transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
+
+		transform.rotation = Helpers.rotateTowards2D (prevDx, -90f);
+			
 	}
 }
