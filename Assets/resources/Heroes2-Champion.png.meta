@@ -3,6 +3,43 @@ guid: de245a4b25ca3470480b46992517476f
 TextureImporter:
   fileIDToRecycleName:
     21300000: Heroes2-Champion
+    21300002: Heroes2-Champion_0
+    21300004: Heroes2-Champion_1
+    21300006: Heroes2-Champion_2
+    21300008: Heroes2-Champion_3
+    21300010: Heroes2-Champion_4
+    21300012: Heroes2-Champion_5
+    21300014: Heroes2-Champion_6
+    21300016: Heroes2-Champion_7
+    21300018: Heroes2-Champion_8
+    21300020: Heroes2-Champion_9
+    21300022: Heroes2-Champion_10
+    21300024: Heroes2-Champion_11
+    21300026: Heroes2-Champion_12
+    21300028: Heroes2-Champion_13
+    21300030: Heroes2-Champion_14
+    21300032: Heroes2-Champion_15
+    21300034: Heroes2-Champion_16
+    21300036: Heroes2-Champion_17
+    21300038: Heroes2-Champion_18
+    21300040: Heroes2-Champion_19
+    21300042: Heroes2-Champion_20
+    21300044: Heroes2-Champion_21
+    21300046: Heroes2-Champion_22
+    21300048: Heroes2-Champion_23
+    21300050: Heroes2-Champion_24
+    21300052: Heroes2-Champion_25
+    21300054: Heroes2-Champion_26
+    21300056: Heroes2-Champion_27
+    21300058: Heroes2-Champion_28
+    21300060: Heroes2-Champion_29
+    21300062: Heroes2-Champion_30
+    21300064: Heroes2-Champion_31
+    21300066: Heroes2-Champion_32
+    21300068: Heroes2-Champion_33
+    21300070: Heroes2-Champion_34
+    21300072: Heroes2-Champion_35
+    21300074: Heroes2-Champion_36
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -28,11 +65,11 @@ TextureImporter:
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: -1
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -43,6 +80,376 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Heroes2-Champion_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 650
+        width: 72
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_1
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 651
+        width: 81
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_2
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 651
+        width: 95
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_3
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 651
+        width: 81
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_4
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 651
+        width: 82
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_5
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 553
+        width: 81
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_6
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 553
+        width: 79
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_7
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 553
+        width: 80
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_8
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 553
+        width: 82
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_9
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 553
+        width: 77
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_10
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 553
+        width: 78
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_11
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 458
+        width: 89
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_12
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 458
+        width: 93
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_13
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 458
+        width: 134
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_14
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 458
+        width: 138
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_15
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 325
+        width: 94
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_16
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 325
+        width: 92
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_17
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 325
+        width: 108
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_18
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 226
+        width: 106
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_19
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 228
+        width: 103
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_20
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 207
+        width: 162
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_21
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 105
+        width: 102
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_22
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 105
+        width: 119
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_23
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 106
+        width: 114
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_24
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 106
+        width: 91
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_25
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 104
+        width: 88
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_26
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 3
+        width: 110
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_27
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 3
+        width: 107
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_28
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 49
+        width: 55
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_29
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 49
+        width: 55
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_30
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 49
+        width: 55
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_31
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 51
+        width: 60
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_32
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 53
+        width: 58
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_33
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 13
+        width: 55
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_34
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 13
+        width: 55
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_35
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 13
+        width: 55
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Heroes2-Champion_36
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 11
+        width: 90
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
