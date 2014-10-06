@@ -88,7 +88,7 @@ public class Dragon : MonoBehaviour {
 		// there's no LookAt function for 2d :(
 		// -90 is needed because the sprite is not rotated correctly
 
-		transform.rotation = Helpers.rotateTowards2D (prevDx, -90f);
+		//transform.rotation = Helpers.rotateTowards2D (prevDx, -90f);
 			
 	}
 }
