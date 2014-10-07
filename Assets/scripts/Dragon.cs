@@ -108,4 +108,14 @@ public class Dragon : MonoBehaviour {
 		//transform.rotation = Helpers.rotateTowards2D (prevDx, 0f);
 			
 	}
+
+    void ReceiveDamage(float damage)
+    {
+        health -= damage;
+        if (health < 0f)
+        {
+            Destroy(gameObject);
+        }
+
+    }
 }

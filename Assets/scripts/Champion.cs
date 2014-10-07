@@ -20,6 +20,7 @@ public class Champion : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Look();
+        Act();
         Move();
 	}
 
@@ -40,6 +41,13 @@ public class Champion : MonoBehaviour {
         }
     }
 
+    void Act()
+    {
+        if (goal == "dragon")
+        {
+            AttackDragon();
+        }
+    }
     void Move()
     {
         if (goal == "lair")
@@ -67,6 +75,13 @@ public class Champion : MonoBehaviour {
 		}
 	}
 
+    void AttackDragon()
+    {
+        if (DistanceToDragon() < 0.5)
+        {
+            GameObject.Find("Dragon_prefab").SendMessage("ReceiveDamage", Time.deltaTime * attack);
+        }
+    }
     void SetHome(string homeName)
     {
         home = homeName;
