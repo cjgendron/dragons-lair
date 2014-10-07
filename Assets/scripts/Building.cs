@@ -36,7 +36,8 @@ public class Building : MonoBehaviour {
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
 		
 		GUI.HorizontalSlider(new Rect(targetPos.x, Screen.height - (targetPos.y + 10), 60, 20), (float)population, 0.0F, 40.0F);
-
+		string stats = "F: " + food.ToString () + "\n P: " + population.ToString () + "\n A: " + armor.ToString();
+		GUI.Box (new Rect(targetPos.x + 60, Screen.height - targetPos.y, 50, 50), stats);
 
 	}
 
