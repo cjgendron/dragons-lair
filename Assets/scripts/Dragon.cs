@@ -9,7 +9,7 @@ public class Dragon : MonoBehaviour {
 	public int infamy = 0;
 
 	public float movementSpeed = 5f;
-	Vector3 prevDx; // used for rotation
+	//Vector3 prevDx; // used for rotation
 
 	// the flame object has to be the first child
 	ParticleSystem flame;
@@ -93,8 +93,8 @@ public class Dragon : MonoBehaviour {
 		dx = dx * Time.deltaTime * movementSpeed;
 		transform.Translate (dx, Space.World);
 
-		if (dx.sqrMagnitude > 0.0001)
-						prevDx = dx;
+		//if (dx.sqrMagnitude > 0.0001)
+		//				prevDx = dx;
 	}
 
 	void Rotate() {
