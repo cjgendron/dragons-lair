@@ -45,13 +45,13 @@ public class Dragon : MonoBehaviour {
 
 	// A function responsible for setting up the fire. Runs every frame.
 	void BreatheFire() {
-		GameObject target = GetClosestTarget (flameRange);
+		GameObject target = GetClosestTarget (flame.transform.position, flameRange);
 		if (flameTarget != target) {
 			LoseTarget();
 			if (target != null) SetTarget(target);
 		}
 		if (flameTarget != null) {			
-			Vector3 direction = target.transform.position - transform.position;
+			Vector3 direction = target.transform.position - flame.transform.position;
 			flame.transform.rotation = Helpers.rotateTowards2D (direction, -90);
 		}
 	}
@@ -66,9 +66,7 @@ public class Dragon : MonoBehaviour {
 		flameTarget = null;
 	}
 
-
-
-	GameObject GetClosestTarget(float maxDistance = 9999999f) {
+	GameObject GetClosestTarget(Vector3 from, float maxDistance = 9999999f) {
 		// there's a more efficient way to do this if the physics module is used
 		// but this is good enough for now
 		GameObject[] gos = GameObject.FindGameObjectsWithTag ("Damageable");
@@ -76,7 +74,7 @@ public class Dragon : MonoBehaviour {
 		GameObject closest = null;
 
 		foreach (GameObject g in gos) {
-			float distance = (g.transform.position - transform.position).sqrMagnitude; 
+			float distance = (g.transform.position - from).sqrMagnitude; 
 			if (distance < minDist && distance < maxDistance) {
 				closest = g;
 				minDist = distance;
