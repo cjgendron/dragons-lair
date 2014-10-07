@@ -5,7 +5,7 @@ public class Champion : MonoBehaviour {
 
 	public int attack = 5;
 	public int armor = 5;
-	public int health = 50;
+	public float health = 50f;
 	public int curGold = 30;
     public int maxGold = 200;
     public float movementSpeed = 2f;
@@ -55,6 +55,17 @@ public class Champion : MonoBehaviour {
             transform.position = Vector3.MoveTowards(transform.position, GameObject.Find(home).transform.position, Time.deltaTime * movementSpeed);
         }
     }
+
+	void ReceiveDamage(object[] vars) {
+		float num = (float) vars[1];
+		GameObject dragon = vars [0] as GameObject;
+		
+		health -= num;
+		if (health < 0f) {
+			dragon.SendMessage("LoseTarget");
+			Destroy (gameObject);
+		}
+	}
 
     void SetHome(string homeName)
     {

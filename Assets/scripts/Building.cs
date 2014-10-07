@@ -4,7 +4,7 @@ using System.Collections;
 public class Building : MonoBehaviour {
 
 	public int food = 30;
-	public int population = 40;
+	public float population = 40f;
 	public int gold = 10;
 	public int armor = 5;
 
@@ -25,6 +25,17 @@ public class Building : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	void ReceiveDamage(object[] vars) {
+		float num = (float) vars[1];
+		GameObject dragon = vars [0] as GameObject;
+
+		population -= num;
+		if (population < 0f) {
+			dragon.SendMessage("LoseTarget");
+			Destroy (gameObject);
+		}
 	}
 
 	// elements are set with respect to the pivot point (I think!)

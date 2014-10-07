@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Dragon : MonoBehaviour {
 
 	public int gold = 0;
-	public int health = 100;
+	public float health = 100f;
 	public int infamy = 0;
 
 	public float movementSpeed = 5f;
@@ -15,6 +15,8 @@ public class Dragon : MonoBehaviour {
 	ParticleSystem flame;
 	GameObject flameTarget;
 	public float flameRange = 20f;
+	public float flamePower = 20f; // damage per second
+
 
 	public GUISkin customSkin;
 
@@ -53,6 +55,10 @@ public class Dragon : MonoBehaviour {
 		if (flameTarget != null) {			
 			Vector3 direction = target.transform.position - flame.transform.position;
 			flame.transform.rotation = Helpers.rotateTowards2D (direction, -90);
+
+			// you can only pass one variable, so it has to be an array
+			object[] vars = new object[2] {gameObject, Time.deltaTime * flamePower};
+			flameTarget.SendMessage("ReceiveDamage", vars);
 		}
 	}
 
