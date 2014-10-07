@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Dragon : MonoBehaviour {
 
@@ -15,6 +16,8 @@ public class Dragon : MonoBehaviour {
 	GameObject flameTarget;
 	public float flameRange = 20f;
 
+	public GUISkin customSkin;
+
 	// Use this for initialization
 	void Start () {
 		flame = transform.GetChild (0).GetComponent<ParticleSystem>();
@@ -29,6 +32,16 @@ public class Dragon : MonoBehaviour {
 		BreatheFire ();
 	}
 
+	void OnGUI() {
+		GUI.skin = customSkin;
+		// healthbar needs to be styled, but it depicts the current health, and stays above the dragon
+		Vector2 targetPos;
+		targetPos = Camera.main.WorldToScreenPoint (transform.position);
+		
+		GUI.HorizontalSlider(new Rect(targetPos.x - 20, Screen.height - (targetPos.y + 20), 40, 20), (float)health, 0.0F, 100.0F);
+
+		GUI.Box (new Rect(15, 15, 100, 40), "Gold: " + gold.ToString() + "\n Infamy: " + infamy.ToString());
+	}
 
 	// A function responsible for setting up the fire. Runs every frame.
 	void BreatheFire() {

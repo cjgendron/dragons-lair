@@ -15,6 +15,8 @@ public class Building : MonoBehaviour {
 	public bool canAttack = false;
 	public int attack = 5;
 
+	public GUISkin customSkin;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -24,4 +26,18 @@ public class Building : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	// elements are set with respect to the pivot point (I think!)
+	// since our pivot points aren't always in the middle, this will be off-center for some sprites
+	void OnGUI() {
+		GUI.skin = customSkin;
+		// healthbar needs to be styled, but it depicts the current health, and stays above the dragon
+		Vector2 targetPos;
+		targetPos = Camera.main.WorldToScreenPoint (transform.position);
+		
+		GUI.HorizontalSlider(new Rect(targetPos.x, Screen.height - (targetPos.y + 10), 60, 20), (float)population, 0.0F, 40.0F);
+
+
+	}
+
 }

@@ -14,7 +14,9 @@ public class Farm : MonoBehaviour {
 	
 	public bool canAttack = false;
 	public int attack = 2;
-	
+
+	public GUISkin customSkin;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -24,4 +26,5 @@ public class Farm : MonoBehaviour {
 	void Update () {
 		
 	}
+
 }
