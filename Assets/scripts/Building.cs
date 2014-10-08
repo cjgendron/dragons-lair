@@ -50,9 +50,10 @@ public class Building : MonoBehaviour {
 		// healthbar needs to be styled, but it depicts the current health, and stays above the dragon
 		Vector2 targetPos;
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
+		int roundedPopulation = (int) population;
 		
 		GUI.HorizontalSlider(new Rect(targetPos.x, Screen.height - (targetPos.y + 10), 60, 20), (float)population, 0.0F, 40.0F);
-		string stats = "F: " + food.ToString () + "\n P: " + population.ToString () + "\n A: " + armor.ToString();
+		string stats = "F: " + food.ToString () + "\n P: " + roundedPopulation.ToString () + "\n A: " + armor.ToString();
 		GUI.Box (new Rect(targetPos.x + 60, Screen.height - targetPos.y, 50, 50), stats);
 
 	}
