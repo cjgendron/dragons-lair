@@ -5,15 +5,17 @@ public class Building : MonoBehaviour {
 
 	public int food = 30;
 	public float population = 40f;
-	public int gold = 10;
-	public int armor = 5;
+	
+	public float goldRate = 3f; // per second
+
+	public float armor = 1f;
 
 
 	public bool canSpawnChampions = false;
 	public GameObject championType;
 
 	public bool canAttack = false;
-	public int attack = 5;
+	public float attack = 5f;
 
 	public GUISkin customSkin;
 
@@ -31,7 +33,10 @@ public class Building : MonoBehaviour {
 		float num = (float) vars[1];
 		GameObject dragon = vars [0] as GameObject;
 
-		population -= num;
+		population -= num / armor;
+
+		dragon.SendMessage ("ReceiveGold", goldRate * Time.deltaTime);
+
 		if (population < 0f) {
 			dragon.SendMessage("LoseTarget");
 			Destroy (gameObject);

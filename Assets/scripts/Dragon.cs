@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Dragon : MonoBehaviour {
 
-	public int gold = 0;
+	public float gold = 0;
 	public float health = 100f;
 	public int infamy = 0;
 
@@ -70,6 +70,10 @@ public class Dragon : MonoBehaviour {
 	void LoseTarget() {
 		flame.Stop ();
 		flameTarget = null;
+	}
+
+	void ReceiveGold (float amount) {
+		gold += amount;
 	}
 
 	GameObject GetClosestTarget(Vector3 from, float maxDistance = 9999999f) {
