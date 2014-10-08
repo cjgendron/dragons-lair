@@ -22,32 +22,29 @@ public class Building : MonoBehaviour {
 	public bool canAttack = false;
 	public float attack = 5f;
 
-	public int timer = 0;
-	public float spawnCoeff = 1000;
-	public float spawnTime;
+	int timer = 0;
+	public float spawnCoeff;
+	float spawnTime;
+	float timeLeft;
 
 	public GUISkin customSkin;
 
 	// Use this for initialization
 	void Start () {
-<<<<<<< HEAD
-		spawnTime = spawnCoeff * transform.position.magnitude;
-=======
+		spawnTime = spawnCoeff * transform.position.magnitude * 10;
 		initPopulation = population;
->>>>>>> 36a916c99752a7e37156445c2b5a2553f09b5e16
 	}
 	
 	// Update is called once per frame
 	void Update () {
-<<<<<<< HEAD
+		timeLeft = spawnTime-timer;
 		timer += 1;
 		if (timer > spawnTime){
 			spawnChampion();
 			timer=0;
 		}
-=======
 		if (canSpawnChampions)
-						trySpawnChampion ();
+			trySpawnChampion ();
 	}
 
 	void trySpawnChampion() {
@@ -58,16 +55,10 @@ public class Building : MonoBehaviour {
 			* (maxChampionSpawnRate - minChampionSpawnRate) + minChampionSpawnRate;
 
 		if (timeSinceSpawned > timeNeeded) {
-			spawnChampion ();
+			spawnChampion();
 			timeSinceSpawned = timeSinceSpawned % timeNeeded;
 		}
 
-	}
-
-	void spawnChampion () {
-		GameObject newChampion = Instantiate (championType) as GameObject;
-		newChampion.transform.position = transform.position;
->>>>>>> 36a916c99752a7e37156445c2b5a2553f09b5e16
 	}
 
 	void ReceiveDamage(object[] vars) {
@@ -103,7 +94,7 @@ public class Building : MonoBehaviour {
 		int roundedPopulation = (int) population;
 		
 		GUI.HorizontalSlider(new Rect(targetPos.x, Screen.height - (targetPos.y + 10), 60, 20), (float)population, 0.0F, 40.0F);
-		string stats = "F: " + food.ToString () + "\n P: " + roundedPopulation.ToString () + "\n A: " + armor.ToString();
+		string stats = "F: " + food.ToString () + "\n P: " + roundedPopulation.ToString () + "\n S: " + ((int)timeLeft).ToString();
 		GUI.Box (new Rect(targetPos.x + 60, Screen.height - targetPos.y, 50, 50), stats);
 
 	}
