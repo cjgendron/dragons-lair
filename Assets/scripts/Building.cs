@@ -42,8 +42,6 @@ public class Building : MonoBehaviour {
 		float timeNeeded = population / initPopulation 
 			* (maxChampionSpawnRate - minChampionSpawnRate) + minChampionSpawnRate;
 
-		Debug.Log (timeNeeded);
-
 		if (timeSinceSpawned > timeNeeded) {
 			spawnChampion ();
 			timeSinceSpawned = timeSinceSpawned % timeNeeded;
