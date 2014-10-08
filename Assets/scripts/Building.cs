@@ -17,16 +17,24 @@ public class Building : MonoBehaviour {
 	public bool canAttack = false;
 	public float attack = 5f;
 
+	public int timer = 0;
+	public float spawnCoeff = 1000;
+	public float spawnTime;
+
 	public GUISkin customSkin;
 
 	// Use this for initialization
 	void Start () {
-	
+		spawnTime = spawnCoeff * transform.position.magnitude;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		timer += 1;
+		if (timer > spawnTime){
+			spawnChampion();
+			timer=0;
+		}
 	}
 
 	void ReceiveDamage(object[] vars) {
@@ -36,11 +44,20 @@ public class Building : MonoBehaviour {
 		population -= num / armor;
 
 		dragon.SendMessage ("ReceiveGold", goldRate * Time.deltaTime);
+		dragon.SendMessage ("IncreaseInfamy", goldRate * Time.deltaTime * 6);
+
+		//update spawntime
+		//float coeff = GetComponent(dragon).GetInfamy();
+		//spawnCoeff = 1000 / coeff;
 
 		if (population < 0f) {
 			dragon.SendMessage("LoseTarget");
 			Destroy (gameObject);
 		}
+	}
+
+	void spawnChampion(){
+		Instantiate(championType, transform.position, transform.rotation);
 	}
 
 	// elements are set with respect to the pivot point (I think!)

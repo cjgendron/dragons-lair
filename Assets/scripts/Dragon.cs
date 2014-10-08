@@ -6,7 +6,7 @@ public class Dragon : MonoBehaviour {
 
 	public float gold = 0;
 	public float health = 100f;
-	public int infamy = 0;
+	public float infamy = 0;
 
 	public float movementSpeed = 5f;
 	//Vector3 prevDx; // used for rotation
@@ -39,10 +39,13 @@ public class Dragon : MonoBehaviour {
 		// healthbar needs to be styled, but it depicts the current health, and stays above the dragon
 		Vector2 targetPos;
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
+		int roundedGold = (int) (gold*100);
+		int roundedInfamy = (int) (infamy*10);
 		
 		GUI.HorizontalSlider(new Rect(targetPos.x - 20, Screen.height - (targetPos.y + 20), 40, 20), (float)health, 0.0F, 100.0F);
 
-		GUI.Box (new Rect(15, 15, 100, 40), "Gold: " + gold.ToString() + "\n Infamy: " + infamy.ToString());
+		GUI.Box (new Rect(15, 15, 100, 40), "Gold: " + roundedGold.ToString() + "\n Infamy: " + roundedInfamy.ToString()
+			+ "\n Attack: " + flamePower.ToString());
 	}
 
 	// A function responsible for setting up the fire. Runs every frame.
@@ -75,6 +78,24 @@ public class Dragon : MonoBehaviour {
 	void ReceiveGold (float amount) {
 		gold += amount;
 	}
+
+	void ReceiveDamage(float damage)
+    {
+        health -= damage;
+        if (health < 0f)
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
+    void IncreaseInfamy(float amount) {
+    	infamy += amount;
+    }
+
+    float GetInfamy(){
+    	return infamy;
+    }
 
 	GameObject GetClosestTarget(Vector3 from, float maxDistance = 9999999f) {
 		// there's a more efficient way to do this if the physics module is used
@@ -113,13 +134,4 @@ public class Dragon : MonoBehaviour {
 			
 	}
 
-    void ReceiveDamage(float damage)
-    {
-        health -= damage;
-        if (health < 0f)
-        {
-            Destroy(gameObject);
-        }
-
-    }
 }
