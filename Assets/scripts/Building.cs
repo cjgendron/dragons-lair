@@ -5,6 +5,7 @@ public class Building : MonoBehaviour {
 
 	public int food = 30;
 	public float population = 40f;
+	float initPopulation;
 	
 	public float goldRate = 3f; // per second
 
@@ -12,6 +13,10 @@ public class Building : MonoBehaviour {
 
 
 	public bool canSpawnChampions = false;
+	public float maxChampionSpawnRate = 30f;
+	public float minChampionSpawnRate = 2f;
+	float timeSinceSpawned = 999999999f;
+
 	public GameObject championType;
 
 	public bool canAttack = false;
@@ -21,12 +26,34 @@ public class Building : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		initPopulation = population;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (canSpawnChampions)
+						trySpawnChampion ();
+	}
+
+	void trySpawnChampion() {
+		timeSinceSpawned += Time.deltaTime;
+		if (population == initPopulation)
+						return;
+		float timeNeeded = population / initPopulation 
+			* (maxChampionSpawnRate - minChampionSpawnRate) + minChampionSpawnRate;
+
+		Debug.Log (timeNeeded);
+
+		if (timeSinceSpawned > timeNeeded) {
+			spawnChampion ();
+			timeSinceSpawned = timeSinceSpawned % timeNeeded;
+		}
+
+	}
+
+	void spawnChampion () {
+		GameObject newChampion = Instantiate (championType) as GameObject;
+		newChampion.transform.position = transform.position;
 	}
 
 	void ReceiveDamage(object[] vars) {

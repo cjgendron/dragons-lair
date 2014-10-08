@@ -31,10 +31,10 @@ public class Champion : MonoBehaviour {
         {
             goal = "dragon";
         }
-        else if (curGold == maxGold)
-        {
-            goal = "home";
-        }
+//        else if (curGold == maxGold)
+//        {
+//            goal = "home";
+//        }
         else
         {
             goal = "lair";
