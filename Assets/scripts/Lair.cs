@@ -24,6 +24,7 @@ public class Lair : MonoBehaviour {
 		
 		if (health < 0f) {
 			Destroy (gameObject);
+			Application.LoadLevel ("StartScene");
 		}
 	}
 
