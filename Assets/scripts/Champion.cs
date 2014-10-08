@@ -31,10 +31,10 @@ public class Champion : MonoBehaviour {
         {
             goal = "dragon";
         }
-        else if (curGold == maxGold)
-        {
-            goal = "home";
-        }
+//        else if (curGold == maxGold)
+//        {
+//            goal = "home";
+//        }
         else
         {
             goal = "lair";
@@ -47,6 +47,9 @@ public class Champion : MonoBehaviour {
         {
             AttackDragon();
         }
+		else if (goal == "lair") {
+			AttackLair();
+		}
     }
     void Move()
     {
@@ -75,9 +78,16 @@ public class Champion : MonoBehaviour {
 		}
 	}
 
+	void AttackLair() {
+		GameObject lair = GameObject.Find ("Lair");
+		if (Vector3.Distance (lair.transform.position, transform.position) < 2) {
+			lair.SendMessage("ReceiveDamage", Time.deltaTime * attack);
+		}
+	}
+
     void AttackDragon()
     {
-        if (DistanceToDragon() < 0.5)
+        if (DistanceToDragon() < 1)
         {
             GameObject.Find("Dragon_prefab").SendMessage("ReceiveDamage", Time.deltaTime * attack);
         }

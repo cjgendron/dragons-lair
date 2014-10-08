@@ -44,8 +44,14 @@ public class Dragon : MonoBehaviour {
 		
 		GUI.HorizontalSlider(new Rect(targetPos.x - 20, Screen.height - (targetPos.y + 20), 40, 20), (float)health, 0.0F, 100.0F);
 
+<<<<<<< HEAD
 		GUI.Box (new Rect(15, 15, 100, 40), "Gold: " + roundedGold.ToString() + "\n Infamy: " + roundedInfamy.ToString()
 			+ "\n Attack: " + flamePower.ToString());
+=======
+		GUI.Box (new Rect(15, 15, 100, 40), "Gold: " + ((int)gold).ToString()
+		         //+ "\n Infamy: " + infamy.ToString()
+		         );
+>>>>>>> 36a916c99752a7e37156445c2b5a2553f09b5e16
 	}
 
 	// A function responsible for setting up the fire. Runs every frame.

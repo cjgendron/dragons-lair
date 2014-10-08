@@ -5,6 +5,7 @@ public class Building : MonoBehaviour {
 
 	public int food = 30;
 	public float population = 40f;
+	float initPopulation;
 	
 	public float goldRate = 3f; // per second
 
@@ -12,6 +13,10 @@ public class Building : MonoBehaviour {
 
 
 	public bool canSpawnChampions = false;
+	public float maxChampionSpawnRate = 30f;
+	public float minChampionSpawnRate = 2f;
+	float timeSinceSpawned = 999999999f;
+
 	public GameObject championType;
 
 	public bool canAttack = false;
@@ -25,16 +30,44 @@ public class Building : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+<<<<<<< HEAD
 		spawnTime = spawnCoeff * transform.position.magnitude;
+=======
+		initPopulation = population;
+>>>>>>> 36a916c99752a7e37156445c2b5a2553f09b5e16
 	}
 	
 	// Update is called once per frame
 	void Update () {
+<<<<<<< HEAD
 		timer += 1;
 		if (timer > spawnTime){
 			spawnChampion();
 			timer=0;
 		}
+=======
+		if (canSpawnChampions)
+						trySpawnChampion ();
+	}
+
+	void trySpawnChampion() {
+		timeSinceSpawned += Time.deltaTime;
+		if (population == initPopulation)
+						return;
+		float timeNeeded = population / initPopulation 
+			* (maxChampionSpawnRate - minChampionSpawnRate) + minChampionSpawnRate;
+
+		if (timeSinceSpawned > timeNeeded) {
+			spawnChampion ();
+			timeSinceSpawned = timeSinceSpawned % timeNeeded;
+		}
+
+	}
+
+	void spawnChampion () {
+		GameObject newChampion = Instantiate (championType) as GameObject;
+		newChampion.transform.position = transform.position;
+>>>>>>> 36a916c99752a7e37156445c2b5a2553f09b5e16
 	}
 
 	void ReceiveDamage(object[] vars) {
