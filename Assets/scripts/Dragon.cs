@@ -85,6 +85,8 @@ public class Dragon : MonoBehaviour {
         if (health < 0f)
         {
             Destroy(gameObject);
+            Application.LoadLevel("StartScene");
+
         }
 
     }

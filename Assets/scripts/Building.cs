@@ -37,6 +37,9 @@ public class Building : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (canAttack)
+            Attack();
+
 		timeLeft = spawnTime-timer;
 		timer += 1;
 		if (timer > spawnTime){
@@ -51,6 +54,8 @@ public class Building : MonoBehaviour {
 		timeSinceSpawned += Time.deltaTime;
 		if (population == initPopulation)
 						return;
+        if (Helpers.getDistance("Dragon", this.gameObject) < 2)
+            return;
 		float timeNeeded = population / initPopulation 
 			* (maxChampionSpawnRate - minChampionSpawnRate) + minChampionSpawnRate;
 
@@ -60,6 +65,15 @@ public class Building : MonoBehaviour {
 		}
 
 	}
+
+    void Attack()
+    {
+        GameObject dragon = GameObject.Find("Dragon");
+        if (Helpers.getDistance("Dragon", this.gameObject) < 2)
+        {
+            dragon.SendMessage("ReceiveDamage", Time.deltaTime * attack);
+        }
+    }
 
 	void ReceiveDamage(object[] vars) {
 		float num = (float) vars[1];
