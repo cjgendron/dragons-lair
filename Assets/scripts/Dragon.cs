@@ -97,6 +97,10 @@ public class Dragon : MonoBehaviour {
     	return infamy;
     }
 
+    void increaseHealth(float amount) {
+    	health+=amount;
+    }
+
 	GameObject GetClosestTarget(Vector3 from, float maxDistance = 9999999f) {
 		// there's a more efficient way to do this if the physics module is used
 		// but this is good enough for now
