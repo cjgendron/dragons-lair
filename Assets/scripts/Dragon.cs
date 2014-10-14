@@ -51,7 +51,7 @@ public class Dragon : MonoBehaviour {
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
 		int roundedGold = (int) (gold*100);
 		
-		GUI.HorizontalSlider(new Rect(targetPos.x - 20, Screen.height - (targetPos.y + 20), 40, 20), (float)health, 0.0F, 100.0F);
+		GUI.HorizontalSlider(new Rect(targetPos.x - 20, Screen.height - (targetPos.y + 20), 40, 20), (float)health, 0.0F, maxHealth);
 
 		GUI.Box (new Rect(15, 15, 120, 70), "Gold: " + roundedGold.ToString() + "\n Infamy: " + ((int) infamy).ToString()
 			+ "\n Health: " + ((int) health).ToString() + "/" + ((int) maxHealth).ToString()
@@ -116,6 +116,7 @@ public class Dragon : MonoBehaviour {
 
     void LevelUp(){
     	maxHealth += 50*levelCoeff;
+    	health += 20*levelCoeff;
     	flamePower += 2 * levelCoeff;
     	level += 1;
     	levelCoeff += 0.1f;
