@@ -35,7 +35,7 @@ public class Building : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		attack = transform.position.magnitude - atkOffset;
+		attack = transform.position.magnitude * 1.5f - atkOffset;
 		spawnTime = spawnCoeff * transform.position.magnitude * 10;
 		timeLeft = spawnTime-777;
 		initSpawnTime = spawnTime;
