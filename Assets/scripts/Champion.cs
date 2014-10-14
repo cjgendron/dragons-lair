@@ -27,7 +27,7 @@ public class Champion : MonoBehaviour {
     // Checks to see how the close the dragon is to the champion.  The champion will chase the dragon if it is close enough.
     void Look()
     {
-        if (DistanceToDragon() < 5)
+        if (Helpers.getDistance("Dragon", this.gameObject) < 5)
         {
             goal = "dragon";
         }
@@ -45,10 +45,10 @@ public class Champion : MonoBehaviour {
     {
         if (goal == "dragon")
         {
-            AttackDragon();
+            Attack("Dragon");
         }
 		else if (goal == "lair") {
-			AttackLair();
+			Attack("Lair");
 		}
     }
     void Move()
@@ -59,7 +59,7 @@ public class Champion : MonoBehaviour {
         }
         else if (goal == "dragon")
         {
-            transform.position = Vector3.MoveTowards(transform.position, GameObject.Find("Dragon_prefab").transform.position, Time.deltaTime * movementSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, GameObject.Find("Dragon").transform.position, Time.deltaTime * movementSpeed);
         }
         else if (goal == "home")
         {
@@ -78,31 +78,17 @@ public class Champion : MonoBehaviour {
 		}
 	}
 
-	void AttackLair() {
-		GameObject lair = GameObject.Find ("Lair");
-		if (Vector3.Distance (lair.transform.position, transform.position) < 2) {
-			lair.SendMessage("ReceiveDamage", Time.deltaTime * attack);
+	void Attack(string targetString) {
+		GameObject target = GameObject.Find (targetString);
+		if (Helpers.getDistance(targetString, this.gameObject) < 2) {
+			target.SendMessage("ReceiveDamage", Time.deltaTime * attack);
 		}
 	}
 
-    void AttackDragon()
-    {
-        if (DistanceToDragon() < 1)
-        {
-            GameObject.Find("Dragon_prefab").SendMessage("ReceiveDamage", Time.deltaTime * attack);
-        }
-    }
     void SetHome(string homeName)
     {
         home = homeName;
     }
 
-    float DistanceToDragon()
-    {
-        float dragonX = GameObject.Find("Dragon_prefab").transform.position.x;
-        float dragonY = GameObject.Find("Dragon_prefab").transform.position.y;
 
-        float distToDragon = Mathf.Sqrt(Mathf.Pow((dragonX - transform.position.x),2) + Mathf.Pow((dragonY - transform.position.y), 2));
-        return distToDragon;
-    }
 }

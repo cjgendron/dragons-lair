@@ -10,6 +10,7 @@ public class Dragon : MonoBehaviour {
 
 	public float movementSpeed = 5f;
 	//Vector3 prevDx; // used for rotation
+    float spriteOrientation = 1f;
 
 	// the flame object has to be the first child
 	ParticleSystem flame;
@@ -85,6 +86,8 @@ public class Dragon : MonoBehaviour {
         if (health < 0f)
         {
             Destroy(gameObject);
+            Application.LoadLevel("StartScene");
+
         }
 
     }
@@ -124,8 +127,17 @@ public class Dragon : MonoBehaviour {
 		// (Smoothing is added by Unity by default)
 		Vector3 dx = new Vector3 (Input.GetAxis ("Horizontal"), Input.GetAxis ("Vertical"), 0);
 		dx = dx * Time.deltaTime * movementSpeed;
-		transform.Translate (dx, Space.World);
+        
+        //flip the sprite if orientation and input are opposites
+        if (spriteOrientation * Input.GetAxis("Horizontal") < 0)
+        {
+            spriteOrientation *= -1;
+            transform.localScale = Vector3.Scale(transform.localScale, new Vector3(-1, 1, 1));
+        }
 
+
+
+		transform.Translate (dx, Space.World);
 		//if (dx.sqrMagnitude > 0.0001)
 		//				prevDx = dx;
 	}
