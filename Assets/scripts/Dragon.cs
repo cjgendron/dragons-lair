@@ -7,7 +7,9 @@ public class Dragon : MonoBehaviour {
 	public float gold = 0;
 	public float health = 100f;
 	float maxHealth = 100;
-	float infamy = 0;
+	public static float infamy = 0;
+	int level = 1;
+	float levelCoeff = 1f;
 
 	public float movementSpeed = 5f;
 	//Vector3 prevDx; // used for rotation
@@ -18,12 +20,14 @@ public class Dragon : MonoBehaviour {
 	GameObject flameTarget;
 	public float flameRange = 20f;
 	public float flamePower = 20f; // damage per second
+	public float baseAttack;
 
 
 	public GUISkin customSkin;
 
 	// Use this for initialization
 	void Start () {
+		baseAttack = flamePower;
 		flame = transform.GetChild (0).GetComponent<ParticleSystem>();
 		flame.Stop ();
 		maxHealth=health;
@@ -31,6 +35,9 @@ public class Dragon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (infamy > 100 * level * levelCoeff){
+			LevelUp();
+		}
 		Move ();
 		Rotate ();
 
@@ -43,14 +50,13 @@ public class Dragon : MonoBehaviour {
 		Vector2 targetPos;
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
 		int roundedGold = (int) (gold*100);
-		int roundedInfamy = (int) (infamy);
 		
 		GUI.HorizontalSlider(new Rect(targetPos.x - 20, Screen.height - (targetPos.y + 20), 40, 20), (float)health, 0.0F, 100.0F);
 
-		GUI.Box (new Rect(15, 15, 120, 55), "Gold: " + roundedGold.ToString() + "\n Infamy: " + roundedInfamy.ToString()
+		GUI.Box (new Rect(15, 15, 120, 70), "Gold: " + roundedGold.ToString() + "\n Infamy: " + ((int) infamy).ToString()
 			+ "\n Health: " + ((int) health).ToString() + "/" + ((int) maxHealth).ToString()
 			// + "\n Attack: " + flamePower.ToString() + "\n Armor: 20" + "\n Speed: " + ((int) movementSpeed).ToString()
-			);
+			+ "\n Attack: " + ((int) flamePower).ToString());
 	}
 
 	// A function responsible for setting up the fire. Runs every frame.
@@ -91,9 +97,11 @@ public class Dragon : MonoBehaviour {
         {
             Destroy(gameObject);
             Application.LoadLevel("StartScene");
-
         }
 
+    }
+    public float GetInfamy(){
+    	return infamy;
     }
 
     void IncreaseInfamy(float amount) {
@@ -104,6 +112,14 @@ public class Dragon : MonoBehaviour {
     	if (health < maxHealth){
     		health+=amount;
     	}
+    }
+
+    void LevelUp(){
+    	maxHealth += 50*levelCoeff;
+    	flamePower += 2 * levelCoeff;
+    	level += 1;
+    	levelCoeff += 0.1f;
+
     }
 
 	GameObject GetClosestTarget(Vector3 from, float maxDistance = 9999999f) {

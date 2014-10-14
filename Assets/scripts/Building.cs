@@ -16,50 +16,54 @@ public class Building : MonoBehaviour {
 	public float armor = 1f;
 
 
-	bool canSpawnChampions = false;
 	public float maxChampionSpawnRate = 30f;
 	public float minChampionSpawnRate = 2f;
 	float timeSinceSpawned = 999999999f;
 
 	public GameObject championType;
+	Dragon player;
 
-	bool canAttack = true;
-	public float attack = 5f;
+	float attack;
+	public float atkOffset;
 
-	int timer = 0;
 	public float spawnCoeff;
 	float spawnTime;
+	float initSpawnTime;
 	float timeLeft;
-	float dragonInfamy;
 
 	public GUISkin customSkin;
 
 	// Use this for initialization
 	void Start () {
+		attack = transform.position.magnitude - atkOffset;
 		spawnTime = spawnCoeff * transform.position.magnitude * 10;
+		timeLeft = spawnTime-777;
+		initSpawnTime = spawnTime;
 		initPopulation = population;
-		if (type == "farm"){
-			canAttack = false;
-		}
-		if (type == "farm"){
-			canSpawnChampions = false;
-		}
+		player = GameObject.Find("Dragon_prefab").GetComponent<Dragon>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (canAttack)
+        if (type != "farm")
             Attack();
 
-		timeLeft = spawnTime-timer;
-		timer += 1;
-		if (timer > spawnTime){
-			spawnChampion();
-			timer=0;
+        //update spawntime
+		timeLeft -= 1;
+		spawnTime = initSpawnTime - 2 * player.GetInfamy();
+
+		//spawn Champion
+		if (timeLeft < 0 && type != "farm"){
+			Instantiate(championType, transform.position, transform.rotation);
+			//trySpawnChampion ();
+			timeLeft = spawnTime;
 		}
-		if (canSpawnChampions)
-			trySpawnChampion ();
-		repair();
+
+			
+			
+
+		//repair
+		repair();		
 	}
 
 	void repair() {
@@ -73,6 +77,7 @@ public class Building : MonoBehaviour {
 		food += foodRate * Time.deltaTime;
 	}
 
+	//currently unused
 	void trySpawnChampion() {
 		timeSinceSpawned += Time.deltaTime;
 		if (population == initPopulation)
@@ -83,7 +88,7 @@ public class Building : MonoBehaviour {
 			* (maxChampionSpawnRate - minChampionSpawnRate) + minChampionSpawnRate;
 
 		if (timeSinceSpawned > timeNeeded) {
-			spawnChampion();
+			Instantiate(championType, transform.position, transform.rotation);
 			timeSinceSpawned = timeSinceSpawned % timeNeeded;
 		}
 
@@ -107,10 +112,6 @@ public class Building : MonoBehaviour {
 		dragon.SendMessage ("ReceiveGold", goldRate * Time.deltaTime);
 		dragon.SendMessage ("IncreaseInfamy", goldRate * Time.deltaTime * 6);
 
-		//update spawntime
-		//float coeff = dragon.SendMessage("IncreaseInfamy", goldRate * Time.deltaTime * 6);
-		//spawnCoeff = 1000 / coeff;
-
 		if (population < 0f) {
 			dragon.SendMessage("IncreaseHealth", food*2);
 			dragon.SendMessage("LoseTarget");
@@ -123,10 +124,6 @@ public class Building : MonoBehaviour {
 		}
 	}
 
-	void spawnChampion(){
-		Instantiate(championType, transform.position, transform.rotation);
-	}
-
 	// elements are set with respect to the pivot point (I think!)
 	// since our pivot points aren't always in the middle, this will be off-center for some sprites
 	void OnGUI() {
@@ -137,7 +134,7 @@ public class Building : MonoBehaviour {
 		int roundedPopulation = (int) population;
 		
 		GUI.HorizontalSlider(new Rect(targetPos.x, Screen.height - (targetPos.y + 10), 60, 20), (float)population, 0.0F, initPopulation);
-		string stats = "F: " + ((int)food).ToString () + "\n P: " + roundedPopulation.ToString () + "\n S: " + ((int)timeLeft).ToString();
+		string stats = "F: " + ((int)food).ToString () + "\n P: " + roundedPopulation.ToString () + "\n S: " + ((int)(timeLeft+100)/100).ToString();
 		if (type=="farm"){
 			stats = "F: " + ((int)food).ToString () + "\n P: " + roundedPopulation.ToString () + "\n S: " + "0";
 		}
