@@ -3,29 +3,34 @@ using System.Collections;
 
 public class Building : MonoBehaviour {
 
-	public int food = 30;
+	public string type;
+	public float food = 30f;
 	public float population = 40f;
+	public float maxPopulation = 100f;
 	float initPopulation;
 	
-	public float goldRate = 3f; // per second
+	public float goldRate; // per second
+	public float regenRate;
+	public float foodRate = 1f;
 
 	public float armor = 1f;
 
 
-	public bool canSpawnChampions = false;
+	bool canSpawnChampions = false;
 	public float maxChampionSpawnRate = 30f;
 	public float minChampionSpawnRate = 2f;
 	float timeSinceSpawned = 999999999f;
 
 	public GameObject championType;
 
-	public bool canAttack = false;
+	bool canAttack = true;
 	public float attack = 5f;
 
 	int timer = 0;
 	public float spawnCoeff;
 	float spawnTime;
 	float timeLeft;
+	float dragonInfamy;
 
 	public GUISkin customSkin;
 
@@ -33,6 +38,12 @@ public class Building : MonoBehaviour {
 	void Start () {
 		spawnTime = spawnCoeff * transform.position.magnitude * 10;
 		initPopulation = population;
+		if (type == "farm"){
+			canAttack = false;
+		}
+		if (type == "farm"){
+			canSpawnChampions = false;
+		}
 	}
 	
 	// Update is called once per frame
@@ -48,6 +59,18 @@ public class Building : MonoBehaviour {
 		}
 		if (canSpawnChampions)
 			trySpawnChampion ();
+		repair();
+	}
+
+	void repair() {
+		if (population<maxPopulation){
+			float regenCoeff = population / maxPopulation;
+			population += regenCoeff * regenRate * Time.deltaTime;
+			if (population > maxPopulation){
+				maxPopulation = population;
+			}
+		}
+		food += foodRate * Time.deltaTime;
 	}
 
 	void trySpawnChampion() {
@@ -68,8 +91,8 @@ public class Building : MonoBehaviour {
 
     void Attack()
     {
-        GameObject dragon = GameObject.Find("Dragon");
-        if (Helpers.getDistance("Dragon", this.gameObject) < 2)
+        GameObject dragon = GameObject.Find("Dragon_prefab");
+        if (Helpers.getDistance("Dragon_prefab", this.gameObject) < 2)
         {
             dragon.SendMessage("ReceiveDamage", Time.deltaTime * attack);
         }
@@ -85,12 +108,18 @@ public class Building : MonoBehaviour {
 		dragon.SendMessage ("IncreaseInfamy", goldRate * Time.deltaTime * 6);
 
 		//update spawntime
-		//float coeff = GetComponent(dragon).GetInfamy();
+		//float coeff = dragon.SendMessage("IncreaseInfamy", goldRate * Time.deltaTime * 6);
 		//spawnCoeff = 1000 / coeff;
 
 		if (population < 0f) {
+			dragon.SendMessage("IncreaseHealth", food*2);
 			dragon.SendMessage("LoseTarget");
 			Destroy (gameObject);
+		}
+		if (type=="farm"){
+			food -= num / 2 / armor;
+
+			dragon.SendMessage ("IncreaseHealth", num / armor);
 		}
 	}
 
@@ -107,8 +136,11 @@ public class Building : MonoBehaviour {
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
 		int roundedPopulation = (int) population;
 		
-		GUI.HorizontalSlider(new Rect(targetPos.x, Screen.height - (targetPos.y + 10), 60, 20), (float)population, 0.0F, 40.0F);
-		string stats = "F: " + food.ToString () + "\n P: " + roundedPopulation.ToString () + "\n S: " + ((int)timeLeft).ToString();
+		GUI.HorizontalSlider(new Rect(targetPos.x, Screen.height - (targetPos.y + 10), 60, 20), (float)population, 0.0F, initPopulation);
+		string stats = "F: " + ((int)food).ToString () + "\n P: " + roundedPopulation.ToString () + "\n S: " + ((int)timeLeft).ToString();
+		if (type=="farm"){
+			stats = "F: " + ((int)food).ToString () + "\n P: " + roundedPopulation.ToString () + "\n S: " + "0";
+		}
 		GUI.Box (new Rect(targetPos.x + 60, Screen.height - targetPos.y, 50, 50), stats);
 
 	}

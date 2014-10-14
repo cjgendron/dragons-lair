@@ -6,7 +6,8 @@ public class Dragon : MonoBehaviour {
 
 	public float gold = 0;
 	public float health = 100f;
-	public float infamy = 0;
+	float maxHealth = 100;
+	float infamy = 0;
 
 	public float movementSpeed = 5f;
 	//Vector3 prevDx; // used for rotation
@@ -25,6 +26,7 @@ public class Dragon : MonoBehaviour {
 	void Start () {
 		flame = transform.GetChild (0).GetComponent<ParticleSystem>();
 		flame.Stop ();
+		maxHealth=health;
 	}
 	
 	// Update is called once per frame
@@ -41,12 +43,14 @@ public class Dragon : MonoBehaviour {
 		Vector2 targetPos;
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
 		int roundedGold = (int) (gold*100);
-		int roundedInfamy = (int) (infamy*10);
+		int roundedInfamy = (int) (infamy);
 		
 		GUI.HorizontalSlider(new Rect(targetPos.x - 20, Screen.height - (targetPos.y + 20), 40, 20), (float)health, 0.0F, 100.0F);
 
-		GUI.Box (new Rect(15, 15, 100, 40), "Gold: " + roundedGold.ToString() + "\n Infamy: " + roundedInfamy.ToString()
-			+ "\n Attack: " + flamePower.ToString());
+		GUI.Box (new Rect(15, 15, 120, 55), "Gold: " + roundedGold.ToString() + "\n Infamy: " + roundedInfamy.ToString()
+			+ "\n Health: " + ((int) health).ToString() + "/" + ((int) maxHealth).ToString()
+			// + "\n Attack: " + flamePower.ToString() + "\n Armor: 20" + "\n Speed: " + ((int) movementSpeed).ToString()
+			);
 	}
 
 	// A function responsible for setting up the fire. Runs every frame.
@@ -96,12 +100,10 @@ public class Dragon : MonoBehaviour {
     	infamy += amount;
     }
 
-    float GetInfamy(){
-    	return infamy;
-    }
-
-    void increaseHealth(float amount) {
-    	health+=amount;
+    void IncreaseHealth(float amount) {
+    	if (health < maxHealth){
+    		health+=amount;
+    	}
     }
 
 	GameObject GetClosestTarget(Vector3 from, float maxDistance = 9999999f) {
