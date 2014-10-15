@@ -27,7 +27,8 @@ public class Lair : MonoBehaviour {
 		
 		if (health < 0f) {
 			Destroy (gameObject);
-			Application.LoadLevel ("StartScene");
+            GameObject dragon = GameObject.Find("Dragon_prefab");
+            dragon.SendMessage("Die");
 		}
 	}
 

@@ -21,7 +21,6 @@ public class DeadScreen : MonoBehaviour {
 
     public void Initialize(string[] Args)
     {
-        GameObject canvas = GameObject.Find("Canvas");
-        canvas.guiText.text = "GAME OVER\nGOLD: " + Args[0] + "\nINFAMY: " + Args[1] + "\nLEVEL :" + Args[2];
+
     }
 }

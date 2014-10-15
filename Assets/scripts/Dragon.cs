@@ -103,8 +103,7 @@ public class Dragon : MonoBehaviour {
         health -= damage;
         if (health < 0f)
         {
-            Destroy(gameObject);
-            Application.LoadLevel("StartScene");
+            Die();
         }
 
     }
@@ -179,5 +178,13 @@ public class Dragon : MonoBehaviour {
 		//transform.rotation = Helpers.rotateTowards2D (prevDx, 0f);
 			
 	}
+
+    void Die()
+    {
+        GameObject hiscore = GameObject.Find("HiScore");
+        int[] args = new int[3] { (int)gold, (int)infamy, (int)level };
+        Destroy(gameObject);
+        hiscore.SendMessage("setScores", args);
+    }
 
 }
