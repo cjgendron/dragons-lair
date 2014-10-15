@@ -12,7 +12,7 @@ public class Indicator : MonoBehaviour {
     void Update() {
         counter += 1;
         if (counter == lifetime){
-            destroy(GameObject);
+            Destroy(gameObject);
         }
     }
 }
