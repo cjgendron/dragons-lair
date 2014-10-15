@@ -33,6 +33,7 @@ public class Dragon : MonoBehaviour {
 
     Slider healthSlider;
 
+
 	// Use this for initialization
 	void Start () {
 		baseAttack = flamePower;
@@ -93,11 +94,14 @@ public class Dragon : MonoBehaviour {
 	void SetTarget(GameObject target) {
 		flameTarget = target;
 		flame.Play ();
+        audio.Play();
+        audio.loop = true;
 	}
 
 	void LoseTarget() {
 		flame.Stop ();
 		flameTarget = null;
+        audio.Stop();
 	}
 
 	void ReceiveGold (float amount) {
