@@ -31,6 +31,7 @@ public class Dragon : MonoBehaviour {
 	public float flameRange = 20f;
 	public float flamePower = 20f; // damage per second
 	public float baseAttack;
+	int audioCounter = 0;
 
 	//Overlays
     public GameObject minusOneHealthPrefab;
@@ -116,7 +117,7 @@ public class Dragon : MonoBehaviour {
 	void LoseTarget() {
 		flame.Stop ();
 		flameTarget = null;
-        audio.Stop();
+        audio.loop = false;
 	}
 
 	void ReceiveGold (float amount) {

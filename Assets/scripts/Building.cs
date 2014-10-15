@@ -31,6 +31,7 @@ public class Building : MonoBehaviour {
 	float initSpawnTime;
 	float timeLeft;
 	bool paused = false;
+	int audioCounter;
 
 	public GUISkin customSkin;
 
@@ -108,12 +109,23 @@ public class Building : MonoBehaviour {
 
 	}
 
+	void playAudio () {
+        if (audioCounter == 0){
+            audio.Play();
+        }
+        audioCounter += 1;
+        if (audioCounter > 32){
+            audioCounter = 0;
+        } 
+    }
+
     void Attack()
     {
         GameObject dragon = GameObject.Find("Dragon_prefab");
         if (Helpers.getDistance("Dragon_prefab", this.gameObject) < range)
         {
             dragon.SendMessage("ReceiveDamage", Time.deltaTime * attack);
+            playAudio();
         }
     }
 

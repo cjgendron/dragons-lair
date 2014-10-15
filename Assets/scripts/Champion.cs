@@ -12,6 +12,7 @@ public class Champion : MonoBehaviour {
     public string goal = "dragon";
     public string home = "Village";
     bool paused = false;
+    int audioCounter = 0;
 
     Dragon player;
 
@@ -89,6 +90,7 @@ public class Champion : MonoBehaviour {
 		GameObject lair = GameObject.Find ("Lair");
 		if (Vector3.Distance (lair.transform.position, transform.position) < 2) {
 			lair.SendMessage("ReceiveDamage", Time.deltaTime * attack);
+            playAudio();
 		}
 	}
 
@@ -97,8 +99,20 @@ public class Champion : MonoBehaviour {
         if (DistanceToDragon() < 1)
         {
             GameObject.Find("Dragon_prefab").SendMessage("ReceiveDamage", Time.deltaTime * attack);
+            playAudio();
         }
     }
+
+    void playAudio () {
+        if (audioCounter == 0){
+            audio.Play();
+        }
+        audioCounter += 1;
+        if (audioCounter > 32){
+            audioCounter = 0;
+        } 
+    }
+    
     void SetHome(string homeName)
     {
         home = homeName;
