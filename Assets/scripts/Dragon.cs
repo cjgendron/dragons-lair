@@ -25,6 +25,9 @@ public class Dragon : MonoBehaviour {
 	public float flamePower = 20f; // damage per second
 	public float baseAttack;
 
+    public GameObject minusOneHealthPrefab;
+
+    public GameObject goldPlusOnePrefab;
 
 	public GUISkin customSkin;
 
@@ -98,7 +101,8 @@ public class Dragon : MonoBehaviour {
 	}
 
 	void ReceiveGold (float amount) {
-		gold += amount;
+        gold += amount;
+        GameObject.Instantiate(goldPlusOnePrefab, transform.position + new Vector3(0, -1f, 0), transform.rotation);
 	}
 
 	void ReceiveDamage(float damage)
@@ -109,6 +113,8 @@ public class Dragon : MonoBehaviour {
             gameOver();
         }
 
+        GameObject.Instantiate(minusOneHealthPrefab, transform.position + new Vector3(-1.5f, 0, 0), transform.rotation);
+        
     }
     public float GetInfamy(){
     	return infamy;
