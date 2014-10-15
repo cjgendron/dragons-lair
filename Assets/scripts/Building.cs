@@ -13,6 +13,7 @@ public class Building : MonoBehaviour {
 	public float goldRate; // per second
 	public float regenRate;
 	public float foodRate = 1f;
+	public float range;
 
 	public float armor = 1f;
 
@@ -61,7 +62,7 @@ public class Building : MonoBehaviour {
 
         //update spawntime
 		timeLeft -= 1;
-		spawnTime = initSpawnTime - 2f * player.GetInfamy();
+		spawnTime = initSpawnTime - 1.8f * player.GetInfamy();
 
 		//spawn Champion
 		if (timeLeft < 0 && type != "farm"){
@@ -108,7 +109,7 @@ public class Building : MonoBehaviour {
     void Attack()
     {
         GameObject dragon = GameObject.Find("Dragon_prefab");
-        if (Helpers.getDistance("Dragon_prefab", this.gameObject) < 2)
+        if (Helpers.getDistance("Dragon_prefab", this.gameObject) < range)
         {
             dragon.SendMessage("ReceiveDamage", Time.deltaTime * attack);
         }
