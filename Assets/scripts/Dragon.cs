@@ -49,6 +49,7 @@ public class Dragon : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        infamy = 0;
 		baseAttack = flamePower;
 		flame = transform.GetChild (0).GetComponent<ParticleSystem>();
 		flame.Stop ();
@@ -160,6 +161,26 @@ public class Dragon : MonoBehaviour {
     	}
     }
 
+<<<<<<< HEAD
+=======
+    void LevelUp(){
+    	maxHealth += 50*levelCoeff;
+    	health += 20*levelCoeff;
+    	flamePower += 2 * levelCoeff;
+    	level += 1;
+    	levelCoeff += 0.1f;
+    	if (level >3){
+    		Pause();
+    	}
+    	GameObject.Instantiate(levelupPrefab, transform.position + new Vector3(1, 0, 0), transform.rotation);
+    }
+
+    void sendStats(GameObject menu){
+    	int[] args = new int[5] { (int)(gold*100), (int) baseAttack, (int)level, (int) health, (int) maxHealth};
+    	menu.SendMessage("setStats", args);
+    }
+
+>>>>>>> 591f963f72aeb5c901b9f661da06f3f2ddd5c275
     void ObjectiveDestroyed(int count){
     	winCount += count;
     	GameObject.Instantiate(plusLotsHealthPrefab, transform.position + new Vector3(0, 0.7f, 0), transform.rotation);
@@ -295,10 +316,8 @@ public class Dragon : MonoBehaviour {
     {
         GameObject hiscore = GameObject.Find("HiScore");
         int[] args = new int[4] { (int)gold, (int)infamy, (int)level, 0 };
-        infamy = 0;
-        level = 1;
-        Destroy(gameObject);
         hiscore.SendMessage("setScores", args);
+        Destroy(gameObject);
     }
 
     void Win()
