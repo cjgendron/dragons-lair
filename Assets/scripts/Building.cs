@@ -114,8 +114,6 @@ public class Building : MonoBehaviour {
         if (Helpers.getDistance("Dragon_prefab", this.gameObject) < range)
         {
             dragon.SendMessage("ReceiveDamage", Time.deltaTime * attack);
-            Debug.Log(type);
-        	Debug.Log(attack);
         }
     }
 
@@ -148,15 +146,12 @@ public class Building : MonoBehaviour {
 		}
 	}
 
+	void Pause(bool pause) {
+		paused = pause;
+	}
+
 	void CheckForPause(){
-		if (Input.GetKeyUp("p")){
-			if (paused){
-				paused = false;
-			}
-			else{
-				paused = true;
-			}
-		}
+		paused = player.isPaused();
 	}
 
 	// elements are set with respect to the pivot point (I think!)

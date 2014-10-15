@@ -22,7 +22,7 @@ public class Dragon : MonoBehaviour {
 
 	//Pausing and Leveling
 	bool paused = false;
-	GameObject LevelMenu;
+	bool levelingUp = false;
 
 
 	// the flame object has to be the first child
@@ -160,23 +160,6 @@ public class Dragon : MonoBehaviour {
     	}
     }
 
-    void LevelUp(){
-    	maxHealth += 50*levelCoeff;
-    	health += 20*levelCoeff;
-    	flamePower += 2 * levelCoeff;
-    	level += 1;
-    	levelCoeff += 0.1f;
-    	if (level >3){
-    		Pause();
-    	}
-    	GameObject.Instantiate(levelupPrefab, transform.position + new Vector3(1, 0, 0), transform.rotation);
-    }
-
-    void sendStats(GameObject menu){
-    	int[] args = new int[5] { (int)(gold*100), (int) Attack, (int)level, (int) health, (int) maxHealth};
-    	menu.sendMessage("setStats", args);
-    }
-
     void ObjectiveDestroyed(int count){
     	winCount += count;
     	GameObject.Instantiate(plusLotsHealthPrefab, transform.position + new Vector3(0, 0.7f, 0), transform.rotation);
@@ -228,6 +211,49 @@ public class Dragon : MonoBehaviour {
 		//				prevDx = dx;
 	}
 
+
+    void LevelUp(){
+    	maxHealth += 50*levelCoeff;
+    	health += 20*levelCoeff;
+    	flamePower += 2 * levelCoeff;
+    	level += 1;
+    	levelCoeff += 0.1f;
+    	GameObject.Instantiate(levelupPrefab, new Vector3(-4.5f, 0, 0), transform.rotation);
+    	paused = true;
+    	levelingUp = true;
+    }
+
+    void sendStats(GameObject menu){
+    	int[] args = new int[5] { (int)(gold*100), (int) flamePower, (int)level, (int) health, (int) maxHealth};
+    	menu.SendMessage("setStats", args);
+    }
+
+    void BuyStuff (string type){
+    	if (type == "attack"){
+    		Debug.Log("attack");
+    		if (gold > 10) {
+    			Debug.Log("attackin");
+    			gold -= 10;
+	    		flamePower += 2;
+    		}
+    	}
+    	else if (type == "health"){
+    		Debug.Log("health");
+    		if (gold > 2){
+    			Debug.Log("healthin");
+    			gold -= 2;
+    			health += 5;
+    		}
+    	}
+    	else if (type == "lair"){
+    		if (gold > 3){
+    			gold -= 3;
+    			GameObject.Find("Lair").SendMessage("BuyStuff", "lair");
+    		}
+    		
+    	}
+    }
+
 	void Pause(){
 		if (level > 7){
 			GameObject.Instantiate(pausePrefab3, new Vector3(-4, 0, 0), transform.rotation);
@@ -240,9 +266,11 @@ public class Dragon : MonoBehaviour {
 		}
 	}
 
+
 	void CheckForPause(){
+		//open and close pause menu
 		if (Input.GetKeyUp("p")){
-			if (paused){
+			if (paused && !levelingUp){
 				paused = false;
 			}
 			else{
@@ -250,6 +278,17 @@ public class Dragon : MonoBehaviour {
 				paused = true;
 			}
 		}
+
+		//close leveling up menu
+		if (levelingUp && Input.anyKeyDown && !Input.GetMouseButtonDown(0)) {
+			levelingUp = false;
+			paused = false;
+			GameObject.FindGameObjectWithTag("Stupid").SendMessage("Done");
+       }
+	}
+
+	public bool isPaused(){
+		return paused;
 	}
 
     void Die()

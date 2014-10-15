@@ -13,9 +13,11 @@ public class Champion : MonoBehaviour {
     public string home = "Village";
     bool paused = false;
 
+    Dragon player;
+
 	// Use this for initialization
 	void Start () {
-	
+	   player = GameObject.Find("Dragon_prefab").GetComponent<Dragon>();
 	}
 	
 	// Update is called once per frame
@@ -110,14 +112,11 @@ public class Champion : MonoBehaviour {
         return distToDragon;
     }
 
+    void Pause(bool pause) {
+        paused = pause;
+    }
+
     void CheckForPause(){
-        if (Input.GetKeyUp("p")){
-            if (paused){
-                paused = false;
-            }
-            else{
-                paused = true;
-            }
-        }
+        paused = player.isPaused();
     }
 }

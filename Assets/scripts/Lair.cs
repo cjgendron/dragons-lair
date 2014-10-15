@@ -32,6 +32,15 @@ public class Lair : MonoBehaviour {
 		}
 	}
 
+    void BuyStuff (string type){
+        if (type == "lair"){
+            health += 10;
+            if (health > maxHealth){
+                health = maxHealth;
+            }
+        }
+    }
+
 	void OnGUI() {
 
         healthBar.maxValue = maxHealth;
