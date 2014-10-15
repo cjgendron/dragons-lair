@@ -20,8 +20,10 @@ public class Dragon : MonoBehaviour {
 	public int winNum = 6;
 	int winCount = 0;
 
-	//Paused
+	//Pausing and Leveling
 	bool paused = false;
+	GameObject LevelMenu;
+
 
 	// the flame object has to be the first child
 	ParticleSystem flame;
@@ -168,6 +170,11 @@ public class Dragon : MonoBehaviour {
     		Pause();
     	}
     	GameObject.Instantiate(levelupPrefab, transform.position + new Vector3(1, 0, 0), transform.rotation);
+    }
+
+    void sendStats(GameObject menu){
+    	int[] args = new int[5] { (int)(gold*100), (int) Attack, (int)level, (int) health, (int) maxHealth};
+    	menu.sendMessage("setStats", args);
     }
 
     void ObjectiveDestroyed(int count){
