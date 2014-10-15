@@ -20,6 +20,9 @@ public class Dragon : MonoBehaviour {
 	public int winNum = 6;
 	int winCount = 0;
 
+	//Paused
+	bool paused = false;
+
 	// the flame object has to be the first child
 	ParticleSystem flame;
 	GameObject flameTarget;
@@ -54,7 +57,7 @@ public class Dragon : MonoBehaviour {
 			LevelUp();
 		}
 		Move ();
-		Rotate ();
+		Pause ();
 
 		BreatheFire ();
 	}
@@ -211,12 +214,17 @@ public class Dragon : MonoBehaviour {
 		//				prevDx = dx;
 	}
 
-	void Rotate() {
-		// there's no LookAt function for 2d :(
-		// -90 is needed because the sprite is not rotated correctly
-
-		//transform.rotation = Helpers.rotateTowards2D (prevDx, 0f);
-			
+	void Pause(){
+		if (Input.GetKeyUp("p")){
+			if (paused){
+				Time.timeScale = 1;
+				paused = false;
+			}
+			else{
+				Time.timeScale = 0;
+				paused = true;
+			}
+		}
 	}
 
     void Die()
