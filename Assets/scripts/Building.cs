@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Building : MonoBehaviour {
@@ -33,6 +34,11 @@ public class Building : MonoBehaviour {
 
 	public GUISkin customSkin;
 
+    Text popText;
+    Text foodText;
+    Text spawnTimerText;
+    Slider healthBar;
+
 	// Use this for initialization
 	void Start () {
 		attack = transform.position.magnitude * 1.5f - atkOffset;
@@ -41,6 +47,11 @@ public class Building : MonoBehaviour {
 		initSpawnTime = spawnTime;
 		initPopulation = population;
 		player = GameObject.Find("Dragon_prefab").GetComponent<Dragon>();
+
+        healthBar = transform.Find("UI").GetChild(0).GetComponent<Slider>();
+        popText = transform.Find("UI").GetChild(1).Find("Population").Find("Number").GetComponent<Text>();
+        foodText = transform.Find("UI").GetChild(1).Find("Food").Find("Number").GetComponent<Text>();
+        spawnTimerText = transform.Find("UI").GetChild(1).Find("Timer").Find("Number").GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
@@ -127,18 +138,27 @@ public class Building : MonoBehaviour {
 	// elements are set with respect to the pivot point (I think!)
 	// since our pivot points aren't always in the middle, this will be off-center for some sprites
 	void OnGUI() {
-		GUI.skin = customSkin;
-		// healthbar needs to be styled, but it depicts the current health, and stays above the dragon
-		Vector2 targetPos;
-		targetPos = Camera.main.WorldToScreenPoint (transform.position);
-		int roundedPopulation = (int) population;
+
+        popText.text = ((int) population).ToString();
+        spawnTimerText.text = ((int)(timeLeft + 100) / 100).ToString();
+        foodText.text =((int)food).ToString();
+
+        healthBar.maxValue = (float) maxPopulation;
+        healthBar.value = (float)population;
+        //GUI.skin = customSkin;
+        //// healthbar needs to be styled, but it depicts the current health, and stays above the dragon
+        //Vector2 targetPos;
+        //targetPos = Camera.main.WorldToScreenPoint (transform.position);
+        //int roundedPopulation = (int) population;
 		
-		GUI.HorizontalSlider(new Rect(targetPos.x-30, Screen.height - (targetPos.y + 50), 60, 20), (float)population, 0.0F, initPopulation);
-		string stats = "F: " + ((int)food).ToString () + "\n P: " + roundedPopulation.ToString () + "\n S: " + ((int)(timeLeft+100)/100).ToString();
-		if (type=="farm"){
-			stats = "F: " + ((int)food).ToString () + "\n P: " + roundedPopulation.ToString () + "\n S: " + "0";
-		}
-		GUI.Box (new Rect(targetPos.x + 60, Screen.height - targetPos.y, 50, 50), stats);
+
+
+        //GUI.HorizontalSlider(new Rect(targetPos.x-30, Screen.height - (targetPos.y + 50), 60, 20), (float)population, 0.0F, initPopulation);
+        //string stats = "F: " + ((int)food).ToString () + "\n P: " + roundedPopulation.ToString () + "\n S: " + ((int)(timeLeft+100)/100).ToString();
+        //if (type=="farm"){
+        //    stats = "F: " + ((int)food).ToString () + "\n P: " + roundedPopulation.ToString () + "\n S: " + "0";
+        //}
+        //GUI.Box (new Rect(targetPos.x + 60, Screen.height - targetPos.y, 50, 50), stats);
 
 	}
 

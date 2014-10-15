@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Lair : MonoBehaviour {
@@ -7,10 +8,12 @@ public class Lair : MonoBehaviour {
 	float maxHealth;
 	public GUISkin customSkin;
 
+    Slider healthBar;
 
 	// Use this for initialization
 	void Start () {
 		maxHealth = health;
+        healthBar = transform.Find("UI").GetChild(0).GetComponent<Slider>();
 	}
 	
 	// Update is called once per frame
@@ -29,12 +32,16 @@ public class Lair : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		GUI.skin = customSkin;
-		// healthbar needs to be styled, but it depicts the current health, and stays above the dragon
-		Vector2 targetPos;
-		targetPos = Camera.main.WorldToScreenPoint (transform.position);
+
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
+
+        //GUI.skin = customSkin;
+        //// healthbar needs to be styled, but it depicts the current health, and stays above the dragon
+        //Vector2 targetPos;
+        //targetPos = Camera.main.WorldToScreenPoint (transform.position);
 		
-		GUI.HorizontalSlider(new Rect(targetPos.x, Screen.height - (targetPos.y + 10), 60, 20), health, 0.0F, maxHealth);
+        //GUI.HorizontalSlider(new Rect(targetPos.x, Screen.height - (targetPos.y + 10), 60, 20), health, 0.0F, maxHealth);
 //		string stats = "F: " + food.ToString () + "\n P: " + roundedPopulation.ToString () + "\n A: " + armor.ToString();
 //		GUI.Box (new Rect(targetPos.x + 60, Screen.height - targetPos.y, 50, 50), stats);
 		
