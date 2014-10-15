@@ -171,6 +171,10 @@ public class Dragon : MonoBehaviour {
     	}
     }
 
+    public int GetLevel(){
+    	return level;
+    }
+
 
 	GameObject GetClosestTarget(Vector3 from, float maxDistance = 9999999f) {
 		// there's a more efficient way to do this if the physics module is used
@@ -220,7 +224,7 @@ public class Dragon : MonoBehaviour {
     	flamePower += 2 * levelCoeff;
     	level += 1;
     	levelCoeff += 0.1f;
-    	GameObject.Instantiate(levelupPrefab, new Vector3(-4.5f, 0, 0), transform.rotation);
+    	GameObject.Instantiate(levelupPrefab, new Vector3(-4.2f, 0, 0), transform.rotation);
     	paused = true;
     	levelingUp = true;
     }
@@ -257,7 +261,7 @@ public class Dragon : MonoBehaviour {
     }
 
 	void Pause(){
-		if (level > 7){
+		if (level > 6){
 			GameObject.Instantiate(pausePrefab3, new Vector3(-4, 0, 0), transform.rotation);
 		}
 		else if (level > 3){

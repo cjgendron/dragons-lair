@@ -12,14 +12,26 @@ public class Levelup : MonoBehaviour {
 
     public GameObject lair;
     public GameObject dragon;
-    public GameObject hardcoreLevel;
+    public GameObject hardcoreLevel1;
+    public GameObject hardcoreLevel2;
+    public GameObject hardcoreLevel3;
     Object hardcore;
 
     public GUIText GUIText;
 
 	// Use this for initialization
 	void Start () {
-        hardcore = GameObject.Instantiate(hardcoreLevel, new Vector3(-4.5f, 1.8f, 0), transform.rotation);
+        level = GameObject.Find("Dragon_prefab").GetComponent<Dragon>().GetLevel();
+        if (level > 6){
+            hardcore = GameObject.Instantiate(hardcoreLevel3, new Vector3(-5.3f, 2f, 0), transform.rotation);
+        }
+        else if (level > 3){
+            hardcore = GameObject.Instantiate(hardcoreLevel2, new Vector3(-5.3f, 2f, 0), transform.rotation);
+        }
+        else if (level > 0){
+            hardcore = GameObject.Instantiate(hardcoreLevel1, new Vector3(-5.3f, 2f, 0), transform.rotation);
+        }
+        
 	}
 	
 	// Update is called once per frame
