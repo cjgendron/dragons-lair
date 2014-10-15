@@ -87,7 +87,7 @@ public class Building : MonoBehaviour {
 	void updateSpawnTime(){
 		timeLeft -= 1;
 		if (spawnTime > minChampionSpawnRate * 100){
-			spawnTime = initSpawnTime - 1.8f * player.GetInfamy();
+			spawnTime = initSpawnTime - player.GetInfamy();
 		}
 	}
 

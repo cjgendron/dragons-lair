@@ -281,7 +281,7 @@ public class Dragon : MonoBehaviour {
 		}
 
 		//close leveling up menu
-		if (levelingUp && Input.anyKeyDown && !Input.GetMouseButtonDown(0)) {
+		if (levelingUp && Input.GetKeyUp("space")) {
 			levelingUp = false;
 			paused = false;
 			GameObject.FindGameObjectWithTag("Stupid").SendMessage("Done");

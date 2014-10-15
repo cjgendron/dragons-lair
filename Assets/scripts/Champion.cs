@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Champion : MonoBehaviour {
 
-	public int attack = 5;
+	public int attack;
 	public int armor = 5;
 	public float health = 50f;
 	public int curGold = 30;
@@ -80,6 +80,7 @@ public class Champion : MonoBehaviour {
 		health -= num;
 		if (health < 0f) {
 			dragon.SendMessage("LoseTarget");
+            dragon.SendMessage("IncreaseInfamy", attack/2);
 			Destroy (gameObject);
 		}
 	}
