@@ -4,19 +4,21 @@ using UnityEngine.UI;
 
 public class Dragon : MonoBehaviour {
 
-	public float gold = 0;
-	public float health = 100f;
-	float maxHealth = 100;
-	public static float infamy = 0;
+	//Stats
 	int level = 1;
 	float levelCoeff = 1f;
+	public float gold = 0;
+	float goldCounter = 0;
+	public float health = 100f;
+	float maxHealth = 100;
+	float healthCounter = 0;
+	public static float infamy = 0;
+	public float movementSpeed = 5f;
+    float spriteOrientation = 1f;
 
+	//Win Conditions
 	public int winNum = 6;
 	int winCount = 0;
-
-	public float movementSpeed = 5f;
-	//Vector3 prevDx; // used for rotation
-    float spriteOrientation = 1f;
 
 	// the flame object has to be the first child
 	ParticleSystem flame;
@@ -25,9 +27,11 @@ public class Dragon : MonoBehaviour {
 	public float flamePower = 20f; // damage per second
 	public float baseAttack;
 
+	//Overlays
     public GameObject minusOneHealthPrefab;
-
     public GameObject goldPlusOnePrefab;
+    public GameObject plusOneHealthPrefab;
+    public GameObject plusLotsHealthPrefab;
 
 	public GUISkin customSkin;
 
@@ -102,19 +106,25 @@ public class Dragon : MonoBehaviour {
 
 	void ReceiveGold (float amount) {
         gold += amount;
-        GameObject.Instantiate(goldPlusOnePrefab, transform.position + new Vector3(0, -1f, 0), transform.rotation);
+        goldCounter += amount;
+
+        if (goldCounter > 0.5){
+        	goldCounter = 0;
+        	GameObject.Instantiate(goldPlusOnePrefab, transform.position + new Vector3(0, -1f, 0), transform.rotation);
+        }
 	}
 
 	void ReceiveDamage(float damage)
     {
         health -= damage;
-        if (health < 0f)
-        {
+        healthCounter += damage;
+        if (health < 0f){
             gameOver();
         }
-
-        GameObject.Instantiate(minusOneHealthPrefab, transform.position + new Vector3(-1.5f, 0, 0), transform.rotation);
-        
+        if (healthCounter > 1){
+        	healthCounter = 0;
+        	GameObject.Instantiate(minusOneHealthPrefab, transform.position + new Vector3(-1.5f, 0, 0), transform.rotation);
+        }
     }
     public float GetInfamy(){
     	return infamy;
@@ -126,7 +136,12 @@ public class Dragon : MonoBehaviour {
 
     void IncreaseHealth(float amount) {
     	if (health < maxHealth){
-    		health+=amount;
+    		health += amount;
+    		healthCounter += amount;
+    		if (healthCounter >2){
+    			GameObject.Instantiate(plusOneHealthPrefab, transform.position + new Vector3(0.5f, 0.7f, 0), transform.rotation);
+    			healthCounter = 0;
+    		}
     	}
     }
 
@@ -140,6 +155,8 @@ public class Dragon : MonoBehaviour {
 
     void ObjectiveDestroyed(){
     	winCount += 1;
+    	GameObject.Instantiate(plusLotsHealthPrefab, transform.position + new Vector3(0, 0.7f, 0), transform.rotation);
+    	healthCounter = 0;
     	if (winCount == winNum){
     		gameOver();
     	}
