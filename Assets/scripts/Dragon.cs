@@ -32,6 +32,7 @@ public class Dragon : MonoBehaviour {
     public GameObject goldPlusOnePrefab;
     public GameObject plusOneHealthPrefab;
     public GameObject plusLotsHealthPrefab;
+    public GameObject levelupPrefab;
 
 	public GUISkin customSkin;
 
@@ -121,15 +122,10 @@ public class Dragon : MonoBehaviour {
 	void ReceiveDamage(float damage)
     {
         health -= damage;
-<<<<<<< HEAD
         healthCounter += damage;
-        if (health < 0f){
-            gameOver();
-=======
         if (health < 0f)
         {
             Die();
->>>>>>> f330c3c447248fa5282ac9a8679070c795d56103
         }
         if (healthCounter > 1){
         	healthCounter = 0;
@@ -161,6 +157,7 @@ public class Dragon : MonoBehaviour {
     	flamePower += 2 * levelCoeff;
     	level += 1;
     	levelCoeff += 0.1f;
+    	GameObject.Instantiate(levelupPrefab, transform.position + new Vector3(1, 0, 0), transform.rotation);
     }
 
     void ObjectiveDestroyed(){
