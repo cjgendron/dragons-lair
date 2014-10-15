@@ -11,6 +11,9 @@ public class Dragon : MonoBehaviour {
 	int level = 1;
 	float levelCoeff = 1f;
 
+	public int winNum = 6;
+	int winCount = 0;
+
 	public float movementSpeed = 5f;
 	//Vector3 prevDx; // used for rotation
     float spriteOrientation = 1f;
@@ -53,18 +56,18 @@ public class Dragon : MonoBehaviour {
         healthSlider.maxValue = maxHealth;
         healthSlider.value = health;
 
-        //GUI.skin = customSkin;
+        GUI.skin = customSkin;
         //// healthbar needs to be styled, but it depicts the current health, and stays above the dragon
-        //Vector2 targetPos;
-        //targetPos = Camera.main.WorldToScreenPoint (transform.position);
-        //int roundedGold = (int) (gold*100);
+        Vector2 targetPos;
+        targetPos = Camera.main.WorldToScreenPoint (transform.position);
+        int roundedGold = (int) (gold*100);
 		
         //GUI.HorizontalSlider(new Rect(targetPos.x - 20, Screen.height - (targetPos.y + 20), 40, 20), (float)health, 0.0F, maxHealth);
 
-        //GUI.Box (new Rect(15, 15, 120, 70), "Gold: " + roundedGold.ToString() + "\n Infamy: " + ((int) infamy).ToString()
-        //    + "\n Health: " + ((int) health).ToString() + "/" + ((int) maxHealth).ToString()
-        //    // + "\n Attack: " + flamePower.ToString() + "\n Armor: 20" + "\n Speed: " + ((int) movementSpeed).ToString()
-        //    + "\n Attack: " + ((int) flamePower).ToString());
+        GUI.Box (new Rect(15, 15, 120, 70), "Gold: " + roundedGold.ToString() + "\n Infamy: " + ((int) infamy).ToString()
+            + "\n Health: " + ((int) health).ToString() + "/" + ((int) maxHealth).ToString()
+            // + "\n Attack: " + flamePower.ToString() + "\n Armor: 20" + "\n Speed: " + ((int) movementSpeed).ToString()
+            + "\n Attack: " + ((int) flamePower).ToString());
 	}
 
 	// A function responsible for setting up the fire. Runs every frame.
@@ -103,8 +106,7 @@ public class Dragon : MonoBehaviour {
         health -= damage;
         if (health < 0f)
         {
-            Destroy(gameObject);
-            Application.LoadLevel("StartScene");
+            gameOver();
         }
 
     }
@@ -128,7 +130,20 @@ public class Dragon : MonoBehaviour {
     	flamePower += 2 * levelCoeff;
     	level += 1;
     	levelCoeff += 0.1f;
+    }
 
+    void ObjectiveDestroyed(){
+    	winCount += 1;
+    	if (winCount == winNum){
+    		gameOver();
+    	}
+    }
+
+    void gameOver(){
+    	Destroy(gameObject);
+    	infamy=0;
+    	level=1;
+        Application.LoadLevel("StartScene");
     }
 
 	GameObject GetClosestTarget(Vector3 from, float maxDistance = 9999999f) {

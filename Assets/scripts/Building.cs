@@ -58,11 +58,7 @@ public class Building : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (type != "farm")
-            Attack();
-
-        //update spawntime
-		timeLeft -= 1;
-		spawnTime = initSpawnTime - 1.8f * player.GetInfamy();
+            Attack();		
 
 		//spawn Champion
 		if (timeLeft < 0 && type != "farm"){
@@ -71,10 +67,7 @@ public class Building : MonoBehaviour {
 			timeLeft = spawnTime;
 		}
 
-			
-			
-
-		//repair
+		updateSpawnTime();
 		repair();		
 	}
 
@@ -87,6 +80,13 @@ public class Building : MonoBehaviour {
 			}
 		}
 		food += foodRate * Time.deltaTime;
+	}
+
+	void updateSpawnTime(){
+		timeLeft -= 1;
+		if (spawnTime > minChampionSpawnRate * 100){
+			spawnTime = initSpawnTime - 1.8f * player.GetInfamy();
+		}
 	}
 
 	//currently unused
@@ -125,9 +125,12 @@ public class Building : MonoBehaviour {
 		dragon.SendMessage ("IncreaseInfamy", goldRate * Time.deltaTime * 6);
 
 		if (population < 0f) {
+			//destroy building
 			dragon.SendMessage("IncreaseHealth", food*2);
 			dragon.SendMessage("LoseTarget");
+			dragon.SendMessage("ObjectiveDestroyed");
 			Destroy (gameObject);
+
 		}
 		if (type=="farm"){
 			food -= num / 2 / armor;
