@@ -35,7 +35,7 @@ public class Levelup : MonoBehaviour {
 
     void updateText () {
         text = "Gold: " + gold.ToString() + "\n Attack: " + attack.ToString()
-            + "\n Health: " + health.ToString() + "/" maxHealth.ToString();
+            + "\n Health: " + health.ToString() + "/" + maxHealth.ToString();
         GUIText.text = text;
     }
 }
