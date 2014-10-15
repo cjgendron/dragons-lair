@@ -32,6 +32,7 @@ public class Building : MonoBehaviour {
 	float spawnTime;
 	float initSpawnTime;
 	float timeLeft;
+	bool paused = false;
 
 	public GUISkin customSkin;
 
@@ -57,18 +58,23 @@ public class Building : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (type != "farm")
-            Attack();		
+		Pause();
+		if (!paused){
+			if (type != "farm"){
+				 Attack();	
+			}
 
-		//spawn Champion
-		if (timeLeft < 0 && type != "farm"){
-			Instantiate(championType, transform.position, transform.rotation);
-			//trySpawnChampion ();
-			timeLeft = spawnTime;
+			//spawn Champion
+			if (timeLeft < 0 && type != "farm"){
+				Instantiate(championType, transform.position, transform.rotation);
+				//trySpawnChampion ();
+				timeLeft = spawnTime;
+			}
+
+			updateSpawnTime();
+			repair();	
 		}
-
-		updateSpawnTime();
-		repair();		
+        	
 	}
 
 	void repair() {
@@ -136,6 +142,17 @@ public class Building : MonoBehaviour {
 			food -= num / 2 / armor;
 
 			dragon.SendMessage ("IncreaseHealth", num / armor);
+		}
+	}
+
+	void Pause(){
+		if (Input.GetKeyUp("p")){
+			if (paused){
+				paused = false;
+			}
+			else{
+				paused = true;
+			}
 		}
 	}
 
