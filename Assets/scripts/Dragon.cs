@@ -121,15 +121,10 @@ public class Dragon : MonoBehaviour {
 	void ReceiveDamage(float damage)
     {
         health -= damage;
-<<<<<<< HEAD
         healthCounter += damage;
-        if (health < 0f){
-            gameOver();
-=======
         if (health < 0f)
         {
             Die();
->>>>>>> f330c3c447248fa5282ac9a8679070c795d56103
         }
         if (healthCounter > 1){
         	healthCounter = 0;
