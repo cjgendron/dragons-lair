@@ -37,6 +37,7 @@ public class Dragon : MonoBehaviour {
 
     Slider healthSlider;
 
+
 	// Use this for initialization
 	void Start () {
 		baseAttack = flamePower;
@@ -97,11 +98,14 @@ public class Dragon : MonoBehaviour {
 	void SetTarget(GameObject target) {
 		flameTarget = target;
 		flame.Play ();
+        audio.Play();
+        audio.loop = true;
 	}
 
 	void LoseTarget() {
 		flame.Stop ();
 		flameTarget = null;
+        audio.Stop();
 	}
 
 	void ReceiveGold (float amount) {
@@ -117,9 +121,15 @@ public class Dragon : MonoBehaviour {
 	void ReceiveDamage(float damage)
     {
         health -= damage;
+<<<<<<< HEAD
         healthCounter += damage;
         if (health < 0f){
             gameOver();
+=======
+        if (health < 0f)
+        {
+            Die();
+>>>>>>> f330c3c447248fa5282ac9a8679070c795d56103
         }
         if (healthCounter > 1){
         	healthCounter = 0;
@@ -158,16 +168,10 @@ public class Dragon : MonoBehaviour {
     	GameObject.Instantiate(plusLotsHealthPrefab, transform.position + new Vector3(0, 0.7f, 0), transform.rotation);
     	healthCounter = 0;
     	if (winCount == winNum){
-    		gameOver();
+            Win();
     	}
     }
 
-    void gameOver(){
-    	Destroy(gameObject);
-    	infamy=0;
-    	level=1;
-        Application.LoadLevel("StartScene");
-    }
 
 	GameObject GetClosestTarget(Vector3 from, float maxDistance = 9999999f) {
 		// there's a more efficient way to do this if the physics module is used
@@ -217,5 +221,23 @@ public class Dragon : MonoBehaviour {
 		//transform.rotation = Helpers.rotateTowards2D (prevDx, 0f);
 			
 	}
+
+    void Die()
+    {
+        GameObject hiscore = GameObject.Find("HiScore");
+        int[] args = new int[4] { (int)gold, (int)infamy, (int)level, 0 };
+        infamy = 0;
+        level = 1;
+        Destroy(gameObject);
+        hiscore.SendMessage("setScores", args);
+    }
+
+    void Win()
+    {
+        GameObject hiscore = GameObject.Find("HiScore");
+        int[] args = new int[4] { (int)gold, (int)infamy, (int)level, 1 };
+        Destroy(gameObject);
+        hiscore.SendMessage("setScores", args);
+    }
 
 }
