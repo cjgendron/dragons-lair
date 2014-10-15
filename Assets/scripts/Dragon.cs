@@ -11,6 +11,9 @@ public class Dragon : MonoBehaviour {
 	int level = 1;
 	float levelCoeff = 1f;
 
+	public int winNum = 6;
+	int winCount = 0;
+
 	public float movementSpeed = 5f;
 	//Vector3 prevDx; // used for rotation
     float spriteOrientation = 1f;
@@ -22,6 +25,9 @@ public class Dragon : MonoBehaviour {
 	public float flamePower = 20f; // damage per second
 	public float baseAttack;
 
+    public GameObject minusOneHealthPrefab;
+
+    public GameObject goldPlusOnePrefab;
 
 	public GUISkin customSkin;
 
@@ -53,18 +59,18 @@ public class Dragon : MonoBehaviour {
         healthSlider.maxValue = maxHealth;
         healthSlider.value = health;
 
-        //GUI.skin = customSkin;
+        GUI.skin = customSkin;
         //// healthbar needs to be styled, but it depicts the current health, and stays above the dragon
-        //Vector2 targetPos;
-        //targetPos = Camera.main.WorldToScreenPoint (transform.position);
-        //int roundedGold = (int) (gold*100);
+        Vector2 targetPos;
+        targetPos = Camera.main.WorldToScreenPoint (transform.position);
+        int roundedGold = (int) (gold*100);
 		
         //GUI.HorizontalSlider(new Rect(targetPos.x - 20, Screen.height - (targetPos.y + 20), 40, 20), (float)health, 0.0F, maxHealth);
 
-        //GUI.Box (new Rect(15, 15, 120, 70), "Gold: " + roundedGold.ToString() + "\n Infamy: " + ((int) infamy).ToString()
-        //    + "\n Health: " + ((int) health).ToString() + "/" + ((int) maxHealth).ToString()
-        //    // + "\n Attack: " + flamePower.ToString() + "\n Armor: 20" + "\n Speed: " + ((int) movementSpeed).ToString()
-        //    + "\n Attack: " + ((int) flamePower).ToString());
+        GUI.Box (new Rect(15, 15, 120, 70), "Gold: " + roundedGold.ToString() + "\n Infamy: " + ((int) infamy).ToString()
+            + "\n Health: " + ((int) health).ToString() + "/" + ((int) maxHealth).ToString()
+            // + "\n Attack: " + flamePower.ToString() + "\n Armor: 20" + "\n Speed: " + ((int) movementSpeed).ToString()
+            + "\n Attack: " + ((int) flamePower).ToString());
 	}
 
 	// A function responsible for setting up the fire. Runs every frame.
@@ -95,7 +101,8 @@ public class Dragon : MonoBehaviour {
 	}
 
 	void ReceiveGold (float amount) {
-		gold += amount;
+        gold += amount;
+        GameObject.Instantiate(goldPlusOnePrefab, transform.position + new Vector3(0, -1f, 0), transform.rotation);
 	}
 
 	void ReceiveDamage(float damage)
@@ -106,6 +113,8 @@ public class Dragon : MonoBehaviour {
             Die();
         }
 
+        GameObject.Instantiate(minusOneHealthPrefab, transform.position + new Vector3(-1.5f, 0, 0), transform.rotation);
+        
     }
     public float GetInfamy(){
     	return infamy;
@@ -127,8 +136,15 @@ public class Dragon : MonoBehaviour {
     	flamePower += 2 * levelCoeff;
     	level += 1;
     	levelCoeff += 0.1f;
-
     }
+
+    void ObjectiveDestroyed(){
+    	winCount += 1;
+    	if (winCount == winNum){
+            Win();
+    	}
+    }
+
 
 	GameObject GetClosestTarget(Vector3 from, float maxDistance = 9999999f) {
 		// there's a more efficient way to do this if the physics module is used
@@ -182,7 +198,17 @@ public class Dragon : MonoBehaviour {
     void Die()
     {
         GameObject hiscore = GameObject.Find("HiScore");
-        int[] args = new int[3] { (int)gold, (int)infamy, (int)level };
+        int[] args = new int[4] { (int)gold, (int)infamy, (int)level, 0 };
+        infamy = 0;
+        level = 1;
+        Destroy(gameObject);
+        hiscore.SendMessage("setScores", args);
+    }
+
+    void Win()
+    {
+        GameObject hiscore = GameObject.Find("HiScore");
+        int[] args = new int[4] { (int)gold, (int)infamy, (int)level, 1 };
         Destroy(gameObject);
         hiscore.SendMessage("setScores", args);
     }

@@ -7,6 +7,7 @@ public class HiScore : MonoBehaviour {
     public string infamy;
     public string level;
     public string text;
+    public bool won;
     public int img;
 
 	// Use this for initialization
@@ -27,6 +28,11 @@ public class HiScore : MonoBehaviour {
         infamy = args[1].ToString();
         level = args[2].ToString();
 
+        if (args[3] == 0)
+            won = false;
+        else
+            won = true;
+
         if (50 > args[1])
             img = 0;
 
@@ -43,7 +49,12 @@ public class HiScore : MonoBehaviour {
     void sendScore()
     {
         GameObject scoreboard = GameObject.Find("Text");
-        text = "GAME OVER\nGOLD: " + gold + "\nINFAMY: " + infamy + "\nLEVEL: " + level;
+        string winloss;
+        if (won)
+            winloss = "YOU WIN";
+        else
+            winloss = "GAME OVER";
+        text = winloss + "\nGOLD: " + gold + "\nINFAMY: " + infamy + "\nLEVEL: " + level;
         scoreboard.BroadcastMessage("setText", text);
 
         if (img == 0)
