@@ -11,6 +11,7 @@ public class Champion : MonoBehaviour {
     public float movementSpeed = 2f;
     public string goal = "dragon";
     public string home = "Village";
+    bool paused = false;
 
 	// Use this for initialization
 	void Start () {
@@ -19,9 +20,12 @@ public class Champion : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Look();
-        Act();
-        Move();
+        CheckForPause();
+        if (!paused){
+            Look();
+            Act();
+            Move();
+        }
 	}
 
     // Checks to see how the close the dragon is to the champion.  The champion will chase the dragon if it is close enough.
@@ -104,5 +108,16 @@ public class Champion : MonoBehaviour {
 
         float distToDragon = Mathf.Sqrt(Mathf.Pow((dragonX - transform.position.x),2) + Mathf.Pow((dragonY - transform.position.y), 2));
         return distToDragon;
+    }
+
+    void CheckForPause(){
+        if (Input.GetKeyUp("p")){
+            if (paused){
+                paused = false;
+            }
+            else{
+                paused = true;
+            }
+        }
     }
 }
