@@ -142,11 +142,11 @@ public class Building : MonoBehaviour {
 			//destroy building
 			dragon.SendMessage("IncreaseHealth", food*2);
 			dragon.SendMessage("LoseTarget");
-			if (type != "farm"){
-				dragon.SendMessage("ObjectiveDestroyed", 1);
+			if (type == "farm"){
+				dragon.SendMessage("ObjectiveDestroyed", 0);
 			}
 			else{
-				dragon.SendMessage("ObjectiveDestroyed", 0);
+				dragon.SendMessage("ObjectiveDestroyed", 1);
 			}
 			Destroy (gameObject);
 
