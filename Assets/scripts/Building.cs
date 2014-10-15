@@ -25,11 +25,9 @@ public class Building : MonoBehaviour {
 	public GameObject championType;
 	Dragon player;
 
-	float attack;
-	public float atkOffset;
+	public float attack;
 
-	public float spawnCoeff;
-	float spawnTime;
+	public float spawnTime;
 	float initSpawnTime;
 	float timeLeft;
 	bool paused = false;
@@ -43,8 +41,6 @@ public class Building : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		attack = transform.position.magnitude * 1.5f - atkOffset;
-		spawnTime = spawnCoeff * transform.position.magnitude * 10;
 		timeLeft = spawnTime-777;
 		initSpawnTime = spawnTime;
 		initPopulation = population;
@@ -58,7 +54,7 @@ public class Building : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Pause();
+		CheckForPause();
 		if (!paused){
 			if (type != "farm"){
 				 Attack();	
@@ -118,6 +114,8 @@ public class Building : MonoBehaviour {
         if (Helpers.getDistance("Dragon_prefab", this.gameObject) < range)
         {
             dragon.SendMessage("ReceiveDamage", Time.deltaTime * attack);
+            Debug.Log(type);
+        	Debug.Log(attack);
         }
     }
 
@@ -134,7 +132,12 @@ public class Building : MonoBehaviour {
 			//destroy building
 			dragon.SendMessage("IncreaseHealth", food*2);
 			dragon.SendMessage("LoseTarget");
-			dragon.SendMessage("ObjectiveDestroyed");
+			if (type != "farm"){
+				dragon.SendMessage("ObjectiveDestroyed", 1);
+			}
+			else{
+				dragon.SendMessage("ObjectiveDestroyed", 0);
+			}
 			Destroy (gameObject);
 
 		}
@@ -145,7 +148,7 @@ public class Building : MonoBehaviour {
 		}
 	}
 
-	void Pause(){
+	void CheckForPause(){
 		if (Input.GetKeyUp("p")){
 			if (paused){
 				paused = false;
@@ -179,7 +182,7 @@ public class Building : MonoBehaviour {
         //if (type=="farm"){
         //    stats = "F: " + ((int)food).ToString () + "\n P: " + roundedPopulation.ToString () + "\n S: " + "0";
         //}
-        //GUI.Box (new Rect(targetPos.x + 60, Screen.height - targetPos.y, 50, 50), stats);
+        //GUI.Box (new Rect(transform.position.x + 60, Screen.height - transform.position.y, 50, 50), "A: " + attack.ToString());
 
 	}
 

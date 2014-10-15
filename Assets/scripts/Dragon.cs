@@ -36,6 +36,9 @@ public class Dragon : MonoBehaviour {
     public GameObject plusOneHealthPrefab;
     public GameObject plusLotsHealthPrefab;
     public GameObject levelupPrefab;
+    public GameObject pausePrefab1;
+    public GameObject pausePrefab2;
+    public GameObject pausePrefab3;
 
 	public GUISkin customSkin;
 
@@ -53,13 +56,14 @@ public class Dragon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (infamy > 100 * level * levelCoeff){
-			LevelUp();
-		}
-		Move ();
-		Pause ();
-
-		BreatheFire ();
+		CheckForPause ();
+		if (!paused){
+			if (infamy > 100 * level * levelCoeff){
+				LevelUp();
+			}
+			Move ();
+			BreatheFire ();
+		}	
 	}
 
 	void OnGUI() {
@@ -160,11 +164,14 @@ public class Dragon : MonoBehaviour {
     	flamePower += 2 * levelCoeff;
     	level += 1;
     	levelCoeff += 0.1f;
+    	if (level >3){
+    		Pause();
+    	}
     	GameObject.Instantiate(levelupPrefab, transform.position + new Vector3(1, 0, 0), transform.rotation);
     }
 
-    void ObjectiveDestroyed(){
-    	winCount += 1;
+    void ObjectiveDestroyed(int count){
+    	winCount += count;
     	GameObject.Instantiate(plusLotsHealthPrefab, transform.position + new Vector3(0, 0.7f, 0), transform.rotation);
     	healthCounter = 0;
     	if (winCount == winNum){
@@ -215,13 +222,24 @@ public class Dragon : MonoBehaviour {
 	}
 
 	void Pause(){
+		if (level > 7){
+			GameObject.Instantiate(pausePrefab3, new Vector3(-4, 0, 0), transform.rotation);
+		}
+		else if (level > 3){
+			GameObject.Instantiate(pausePrefab2, new Vector3(-4, 0, 0), transform.rotation);
+		}
+		else if (level > 0){
+			GameObject.Instantiate(pausePrefab1, new Vector3(-4, 0, 0), transform.rotation);
+		}
+	}
+
+	void CheckForPause(){
 		if (Input.GetKeyUp("p")){
 			if (paused){
-				Time.timeScale = 1;
 				paused = false;
 			}
 			else{
-				Time.timeScale = 0;
+				Pause();
 				paused = true;
 			}
 		}
